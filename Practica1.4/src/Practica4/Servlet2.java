@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet1
+ * Servlet implementation class Servlet2
  */
-@WebServlet("/Servlet1")
-public class Servlet1 extends HttpServlet {
+@WebServlet("/Servlet2")
+public class Servlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet1() {
+    public Servlet2() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,19 +28,6 @@ public class Servlet1 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String usuario = request.getParameter("username");
-		String pass = request.getParameter("pass");
-		//url a asignar dependiendo de si es administrador o no.
-		String url="";
-		DAOUsuarios du = new DAOUsuarios();
-		
-		if(du.buscarUsuario(usuario, pass).equals("")) {
-			url="/WEB-INF/usuario.jsp";	
-		}else {
-			url="/WEB-INF/registro.html";
-		}
-		
-		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 
 	/**
@@ -52,4 +39,3 @@ public class Servlet1 extends HttpServlet {
 	}
 
 }
-

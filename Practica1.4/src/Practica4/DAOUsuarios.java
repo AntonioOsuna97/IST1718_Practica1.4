@@ -9,9 +9,8 @@ import java.util.ArrayList;
 
 public class DAOUsuarios {
 //Conexión con base de datos
-	
 		private String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
-		private String URL_MYSQL = "jdbc:mysql://localhost/usuario";
+		private String URL_MYSQL = "jdbc:mysql://localhost:3306/usuarios";
 		private Connection conn;
 		public DAOUsuarios(){
 		loadDriver();
@@ -57,5 +56,26 @@ public class DAOUsuarios {
 			return listout;
 
 }
+		public ResultSet buscarUsuario(String nombre, String password) {
+			loadDriver();
+			getConnect();
+			String sql = "SELECT * FROM usuarios WHERE Nombre='"+nombre+"' && Password='"+password+"'";
+			Statement stm = null;
+			ResultSet rs = null;
+			try{
+				stm = conn.createStatement();
+				rs = stm.executeQuery(sql);
+				} catch(SQLException e){System.out.println(e);}
+				finally{
+					if (stm!=null) {
+						try{ stm.close(); } catch(SQLException e){e.printStackTrace();}
+						}
+						if (conn!=null) {
+						try{ conn.close(); } catch(SQLException e){e.printStackTrace(); }
+						}
+						}
+			return rs;
+		}
+		
 }
 
