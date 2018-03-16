@@ -39,24 +39,31 @@ public class Servlet1 extends HttpServlet {
 		//Posicion para recorrer la lista
 		int posicion=0;
 		for(posicion=0;posicion<lista.size();posicion++) {
-			if(lista.get(posicion).getNombre().equals(usuario) 
+			if(lista.get(posicion).getNombre().equals(usuario) && usuario.equals("Admin")
 					&& lista.get(posicion).getPassword().equals(pass)) {
 				request.setAttribute("nombre", lista.get(posicion).getNombre());
 				request.setAttribute("password", lista.get(posicion).getPassword());
 				request.setAttribute("email", lista.get(posicion).getEmail());
 				request.setAttribute("dni", lista.get(posicion).getDni());
 				url="/WEB-INF/usuario.jsp";
+			}else if(lista.get(posicion).getNombre().equals(usuario) && !usuario.equals("Admin")
+			&& lista.get(posicion).getPassword().equals(pass))  {
+				request.setAttribute("nombre", lista.get(posicion).getNombre());
+				request.setAttribute("password", lista.get(posicion).getPassword());
+				request.setAttribute("email", lista.get(posicion).getEmail());
+				request.setAttribute("dni", lista.get(posicion).getDni());
+				url="/WEB-INF/usuariodatos.jsp";
 			}
 			
 		}
+		
+		
 		//Significa que el usuario no existe
-		if(!url.equals("/WEB-INF/usuario.jsp")) {
+		if(!url.equals("/WEB-INF/usuario.jsp") && !url.equals("/WEB-INF/usuariodatos.jsp")) {
 			url="/WEB-INF/registro.html";
 		}
 		
-		
-			
-	
+		request.setAttribute("lista", lista);
 		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}

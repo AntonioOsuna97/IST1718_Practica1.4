@@ -14,7 +14,8 @@
  
 <p>Su nombre es:  ${nombre}</p>
 <p>Su apellido es:  ${password}</p>
-<p>Su email es: </p>
+<p>Su email es: ${email}</p>
+<p>Su dni es: ${dni}</p>
 
 </body>
 </html>
