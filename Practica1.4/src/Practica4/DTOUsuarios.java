@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class DTOUsuarios implements Serializable {
 //Datos de nuestra tabla
 	private String nombre;
-	private String apellido;
+	private String password;
 	private String email;
 	private String dni;
 
@@ -13,12 +13,12 @@ public class DTOUsuarios implements Serializable {
 		this.nombre="";
 		this.email="";
 		this.dni="";
-		this.apellido="";
+		this.password="";
 	}
 	
-	public DTOUsuarios(String nombre, String apellido, String email, String dni) {
+	public DTOUsuarios(String nombre, String password, String email, String dni) {
 		this.nombre=nombre;
-		this.apellido=apellido;
+		this.password=password;
 		this.email=email;
 		this.dni=dni;
 
@@ -32,12 +32,12 @@ public class DTOUsuarios implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getApellido() {
-		return apellido;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getEmail() {

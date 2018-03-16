@@ -2,10 +2,13 @@ package Practica4;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 public class DAOUsuarios {
 //Conexión con base de datos
@@ -56,10 +59,10 @@ public class DAOUsuarios {
 			return listout;
 
 }
-		public ResultSet buscarUsuario(String nombre, String password) {
+		public boolean buscarUsuario(String nombre, String password) {
 			loadDriver();
 			getConnect();
-			String sql = "SELECT * FROM usuarios WHERE Nombre='"+nombre+"' && Password='"+password+"'";
+			String sql = "SELECT * FROM usuarios WHERE Nombre='"+nombre+"' && Password='"+password+"';";
 			Statement stm = null;
 			ResultSet rs = null;
 			try{
@@ -74,8 +77,30 @@ public class DAOUsuarios {
 						try{ conn.close(); } catch(SQLException e){e.printStackTrace(); }
 						}
 						}
-			return rs;
+			return false;
 		}
 		
+		//Añadir usuario
+		public void addUsuario(String nombre, String password, String email, String dni) {
+			getConnect();
+			String sql="INSERT INTO usuarios (Nombre, Password, Email, DNI)"
+					+ " VALUES ('"+nombre+"','"+password+"','"+email+"','"+dni+"');";
+			PreparedStatement stmt = null;
+			try {
+			stmt = conn.prepareStatement(sql);
+			//Método .execute() para operaciones de cualquier tipo, sin devolver objeto
+			//ResultSet: INSERT, UPDATE, DELETE
+			stmt.execute();
+			}catch (Exception e) { System.out.println(e); }
+			finally{
+				if (stmt!=null) {
+					try{ stmt.close(); } catch(SQLException e){e.printStackTrace();}
+				}
+				if (conn!=null) {
+					try{ conn.close(); } catch(SQLException e){e.printStackTrace(); }
+				}
+			}
+	
+		}
 }
 

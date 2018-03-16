@@ -27,7 +27,26 @@ public class Servlet2 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//Parameter(...) es del html
+		String usuario = request.getParameter("username");
+		//Lo añadimos a la petición.
+		request.setAttribute("Nombre", usuario);
+		
+		String password = request.getParameter("pass");
+		//Lo añadimos a la petición.
+		request.setAttribute("Password", password);
+		
+		String email = request.getParameter("email");
+		//Lo añadimos a la petición.
+		request.setAttribute("Email", email);	
+		
+		String dni = request.getParameter("dni");
+		//Lo añadimos a la petición.
+		request.setAttribute("DNI", dni);
+		
+		DAOUsuarios du = new DAOUsuarios();
+		du.addUsuario(usuario, password, email, dni);
+		
 	}
 
 	/**

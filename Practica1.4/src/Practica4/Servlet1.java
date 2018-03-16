@@ -1,6 +1,8 @@
 package Practica4;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +35,28 @@ public class Servlet1 extends HttpServlet {
 		//url a asignar dependiendo de si es administrador o no.
 		String url="";
 		DAOUsuarios du = new DAOUsuarios();
-		
-		if(du.buscarUsuario(usuario, pass).equals("")) {
-			url="/WEB-INF/usuario.jsp";	
-		}else {
+		ArrayList <DTOUsuarios> lista = du.leeUsuarios();
+		//Posicion para recorrer la lista
+		int posicion=0;
+		for(posicion=0;posicion<lista.size();posicion++) {
+			if(lista.get(posicion).getNombre().equals(usuario) 
+					&& lista.get(posicion).getPassword().equals(pass)) {
+				request.setAttribute("nombre", lista.get(posicion).getNombre());
+				request.setAttribute("password", lista.get(posicion).getPassword());
+				request.setAttribute("email", lista.get(posicion).getEmail());
+				request.setAttribute("dni", lista.get(posicion).getDni());
+				url="/WEB-INF/usuario.jsp";
+			}
+			
+		}
+		//Significa que el usuario no existe
+		if(!url.equals("/WEB-INF/usuario.jsp")) {
 			url="/WEB-INF/registro.html";
 		}
+		
+		
+			
+	
 		
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
