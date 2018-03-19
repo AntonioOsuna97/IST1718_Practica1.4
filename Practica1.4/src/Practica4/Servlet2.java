@@ -1,6 +1,9 @@
 package Practica4;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,8 +47,24 @@ public class Servlet2 extends HttpServlet {
 		//Lo añadimos a la petición.
 		request.setAttribute("DNI", dni);
 		
+		DTOUsuarios dto = new DTOUsuarios(usuario, password, email, dni);
 		DAOUsuarios du = new DAOUsuarios();
-		du.addUsuario(usuario, password, email, dni);
+		ArrayList <DTOUsuarios> lista = du.leeUsuarios();
+		PrintWriter out = response.getWriter();
+		if(lista.equals(dto)) {
+			out.println("<html>");
+			out.println("<body>");
+			out.println("<h1>Usuario ya registrado correctamente</h1>");
+			out.println("</body>");
+			out.println("</html>");	
+		}else {
+			du.addUsuario(usuario, password, email, dni);
+			out.println("<html>");
+			out.println("<body>");
+			out.println("<h1>Usuario registrado correctamente</h1>");
+			out.println("</body>");
+			out.println("</html>");	
+		}
 		
 	}
 
