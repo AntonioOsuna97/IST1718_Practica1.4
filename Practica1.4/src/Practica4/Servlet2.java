@@ -2,6 +2,7 @@ package Practica4;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -47,25 +48,31 @@ public class Servlet2 extends HttpServlet {
 		//Lo añadimos a la petición.
 		request.setAttribute("DNI", dni);
 		
-		DTOUsuarios dto = new DTOUsuarios(usuario, password, email, dni);
+		
 		DAOUsuarios du = new DAOUsuarios();
 		ArrayList <DTOUsuarios> lista = du.leeUsuarios();
 		PrintWriter out = response.getWriter();
-		if(lista.equals(dto)) {
-			out.println("<html>");
-			out.println("<body>");
-			out.println("<h1>Usuario ya registrado correctamente</h1>");
-			out.println("</body>");
-			out.println("</html>");	
-		}else {
+		boolean variable=false;
+		for(int pos=0;pos<lista.size();pos++) {
+			if(lista.get(pos).getDni().equals(dni) && lista.get(pos).getEmail().equals(email) && 
+					lista.get(pos).getNombre().equals(usuario)) {
+				out.println("<html>");
+				out.println("<body>");
+				out.println("<h1>Usuario ya registrado correctamente</h1>");
+				out.println("</body>");
+				out.println("</html>");
+				variable=true;
+			
+			}
+		}
+		if(variable==false) {
 			du.addUsuario(usuario, password, email, dni);
 			out.println("<html>");
 			out.println("<body>");
 			out.println("<h1>Usuario registrado correctamente</h1>");
 			out.println("</body>");
-			out.println("</html>");	
+			out.println("</html>");
 		}
-		
 	}
 
 	/**
