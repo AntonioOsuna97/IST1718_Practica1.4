@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
-public class DAOUsuarios {
+public class DAOUsuarios implements DAOUsuariosInterfaz {
 //Conexión con base de datos
 		private String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
 		private String URL_MYSQL = "jdbc:mysql://localhost:3306/usuarios";
